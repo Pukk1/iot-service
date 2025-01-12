@@ -17,11 +17,8 @@ public class RetrofitConfig {
 
     @Bean
     public Retrofit retrofit() {
-        return new Retrofit.Builder()
-                .baseUrl(iotControllerProperties.getUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(new OkHttpClient.Builder().build())
-                .build();
+        return new Retrofit.Builder().baseUrl(iotControllerProperties.getUrl())
+                .addConverterFactory(GsonConverterFactory.create()).client(new OkHttpClient.Builder().build()).build();
     }
 
     @Bean

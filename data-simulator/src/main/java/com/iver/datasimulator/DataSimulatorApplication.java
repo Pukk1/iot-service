@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @ConfigurationPropertiesScan
 public class DataSimulatorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DataSimulatorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DataSimulatorApplication.class, args);
+    }
 
 }

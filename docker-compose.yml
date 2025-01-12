@@ -1,6 +1,17 @@
 version: '3.9'
 
 services:
+  data-simulator:
+    build:
+      context: data-simulator
+      dockerfile: Dockerfile
+    ports:
+      - "9091:9091"
+    environment:
+      - IOT_CONTROLLER_URL=http://iot-controller:9090
+    depends_on:
+      - iot-controller
+
   iot-controller:
     build:
       context: controller

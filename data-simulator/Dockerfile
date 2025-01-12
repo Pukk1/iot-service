@@ -5,7 +5,7 @@ FROM openjdk:21
 WORKDIR /
 
 # Копируем файл jar из локальной сборки в контейнер
-COPY target/controller-0.0.1-SNAPSHOT.jar app.jar
+COPY target/data-simulator-0.0.1-SNAPSHOT.jar app.jar
 
 # Указываем команду запуска приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]

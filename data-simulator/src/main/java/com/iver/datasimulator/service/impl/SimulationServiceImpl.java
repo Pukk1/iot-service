@@ -25,18 +25,12 @@ public class SimulationServiceImpl implements SimulationService {
     private final DataSimulationProperties dataSimulationProperties;
     private ScheduledExecutorService executor;
 
-
-    @EventListener(classes = {ContextRefreshedEvent.class})
+    @EventListener(classes = { ContextRefreshedEvent.class })
     public void afterContextRefreshed() {
         executor = Executors.newScheduledThreadPool(dataSimulationProperties.getDeviceNumber());
-        setSimulationConfig(
-                new PatchConfigInput(
-                        dataSimulationProperties.getDeviceNumber(),
-                        dataSimulationProperties.getMessagePerSecond()
-                )
-        );
+        setSimulationConfig(new PatchConfigInput(dataSimulationProperties.getDeviceNumber(),
+                dataSimulationProperties.getMessagePerSecond()));
     }
-
 
     @Override
     public PatchConfigResult setSimulationConfig(PatchConfigInput patchConfigInput) {
@@ -50,18 +44,15 @@ public class SimulationServiceImpl implements SimulationService {
             final String device = i + "";
             final JsonObject body = new JsonObject();
             body.addProperty("A", device);
-            executor.scheduleAtFixedRate(
-                    () -> {
-                        try {
-                            iotControllerApi.sendData(device, body).execute();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    },
-                    0,
-                    1000 / newMessagePerSecond,
-                    TimeUnit.MILLISECONDS
-            );
+            executor.scheduleAtFixedRate(() -> {
+                try {
+                    System.out.println("send message");
+                    var res = iotControllerApi.sendData(device, body).execute();
+                    System.out.println(res);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }, 0, 1000 / newMessagePerSecond, TimeUnit.MILLISECONDS);
         }
         return new PatchConfigResult(newDeviceNumber, newMessagePerSecond);
     }
