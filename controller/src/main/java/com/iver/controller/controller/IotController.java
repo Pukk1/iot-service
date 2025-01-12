@@ -1,14 +1,10 @@
 package com.iver.controller.controller;
 
-import com.iver.controller.dto.input.DevicePackageInput;
 import com.iver.controller.service.IotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class IotController {
     private final IotService iotService;
 
-    @PostMapping
-    public ResponseEntity<?> executeIotPackage(@RequestBody DevicePackageInput input) {
-        iotService.processRequest(input);
+    @PostMapping("/device/{deviceId}/data")
+    public ResponseEntity<?> executeIotPackage(@PathVariable String deviceId, @RequestBody String deviceData) {
+        iotService.processDeviceData(deviceId, deviceData);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
