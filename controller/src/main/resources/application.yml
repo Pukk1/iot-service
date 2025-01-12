@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: controller
+
+  data:
+    mongodb:
+      database: admin
+      host: localhost
+      password: admin
+      port: 27017
+      username: admin
+
+  rabbitmq:
+    host: localhost
+    password: admin
+    queue-name: devicePackages
+    username: admin
