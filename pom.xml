@@ -11,5 +11,6 @@
 
     <modules>
         <module>controller</module>
+        <module>data-simulator</module>
     </modules>
 </project>

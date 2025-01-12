@@ -1,0 +1,14 @@
+server:
+  port: ${CONTROLLER_SERVICE_PORT:9091}
+
+spring:
+  application:
+    name: data-simulator
+
+iot-controller:
+  url: ${IOT_CONTROLLER_URL:http://localhost:9090}
+
+data:
+  simulation:
+    device-number: ${DATA_SIMULATION_DEVICE_NUMBER:10}
+    message-per-second: ${DATA_SIMULATION_MESSAGE_PER_SECOND:1}
