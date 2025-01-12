@@ -11,6 +11,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -21,12 +22,13 @@ import java.util.concurrent.TimeUnit;
 public class SimulationServiceImpl implements SimulationService {
 
     private final IotControllerApi iotControllerApi;
-    private final ScheduledExecutorService executor;
     private final DataSimulationProperties dataSimulationProperties;
+    private ScheduledExecutorService executor;
 
 
     @EventListener(classes = {ContextRefreshedEvent.class})
     public void afterContextRefreshed() {
+        executor = Executors.newScheduledThreadPool(dataSimulationProperties.getDeviceNumber());
         setSimulationConfig(
                 new PatchConfigInput(
                         dataSimulationProperties.getDeviceNumber(),
@@ -40,17 +42,22 @@ public class SimulationServiceImpl implements SimulationService {
     public PatchConfigResult setSimulationConfig(PatchConfigInput patchConfigInput) {
         var newMessagePerSecond = patchConfigInput.getMessagePerSecond();
         var newDeviceNumber = patchConfigInput.getDeviceNumber();
-        var threadPool = (ThreadPoolExecutor) executor;
-        executor.close();
-        if (threadPool.getPoolSize() != newDeviceNumber) {
-            threadPool.setCorePoolSize(newDeviceNumber);
+        if (((ThreadPoolExecutor) executor).getPoolSize() != newDeviceNumber) {
+            executor.close();
+            executor = Executors.newScheduledThreadPool(newDeviceNumber);
         }
         for (int i = 0; i < newDeviceNumber; i++) {
             final String device = i + "";
             final JsonObject body = new JsonObject();
             body.addProperty("A", device);
             executor.scheduleAtFixedRate(
-                    () -> iotControllerApi.sendData(device, body),
+                    () -> {
+                        try {
+                            iotControllerApi.sendData(device, body).execute();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    },
                     0,
                     1000 / newMessagePerSecond,
                     TimeUnit.MILLISECONDS
