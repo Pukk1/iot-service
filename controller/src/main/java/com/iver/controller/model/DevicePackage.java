@@ -15,5 +15,6 @@ import java.time.OffsetDateTime;
 public class DevicePackage {
     @Id
     private String id;
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    // private OffsetDateTime createdAt = OffsetDateTime.now();
+    private String data;
 }
