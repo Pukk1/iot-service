@@ -1,17 +1,20 @@
+server:
+  port: ${CONTROLLER_SERVICE_PORT:9090}
+
 spring:
   application:
     name: controller
 
   data:
     mongodb:
-      database: admin
-      host: localhost
-      password: admin
-      port: 27017
-      username: admin
+      host: ${SPRING_MONGODB_HOST:localhost}
+      port: ${SPRING_MONGODB_PORT:27017}
+      database: ${SPRING_MONGODB_DATABASE:admin}
+      username: ${SPRING_MONGODB_USERNAME:admin}
+      password: ${SPRING_MONGODB_PASSWORD:admin}
 
   rabbitmq:
-    host: localhost
-    password: admin
-    queue-name: devicePackages
-    username: admin
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:admin}
+    queue-name: ${SPRING_RABBITMQ_QUEUE_NAME:devicePackages}

@@ -1,15 +1,15 @@
 version: '3.9'
 
 services:
-  app:
+  iot-controller:
     build:
-      context: .
+      context: controller
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "9090:9090"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/testdb
-      SPRING_RABBITMQ_HOST: rabbitmq
+      - SPRING_MONGODB_HOST=mongo
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mongo
       - rabbitmq
