@@ -12,3 +12,5 @@ data:
   simulation:
     device-number: ${DATA_SIMULATION_DEVICE_NUMBER:10}
     message-per-second: ${DATA_SIMULATION_MESSAGE_PER_SECOND:1}
+    available-device-properties-names: ${DATA_SIMULATION_AVAILABLE_DEVICE_PROPERTIES_NAMES:A,B,C}
+    possible-device-properties-values: ${DATA_SIMULATION_POSSIBLE_DEVICE_PROPERTIES_VALUES:-1,0,1,[D],{"A":"1"}}

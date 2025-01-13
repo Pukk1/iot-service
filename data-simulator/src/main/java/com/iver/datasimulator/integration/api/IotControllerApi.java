@@ -8,5 +8,5 @@ import retrofit2.http.Path;
 
 public interface IotControllerApi {
     @POST("/api/v1/iot/device/{deviceId}/data")
-    Call<String> sendData(@Path("deviceId") String deviceId, @Body JsonObject body);
+    Call<String> sendData(@Path("deviceId") Integer deviceId, @Body JsonObject body);
 }

@@ -6,6 +6,7 @@ import com.iver.datasimulator.dto.PatchConfigInput;
 import com.iver.datasimulator.dto.PatchConfigResult;
 import com.iver.datasimulator.integration.api.IotControllerApi;
 import com.iver.datasimulator.service.SimulationService;
+import com.iver.datasimulator.utils.DataBodyGeneratorUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -23,6 +24,7 @@ public class SimulationServiceImpl implements SimulationService {
 
     private final IotControllerApi iotControllerApi;
     private final DataSimulationProperties dataSimulationProperties;
+    private final DataBodyGeneratorUtil dataBodyGeneratorUtil;
     private ScheduledExecutorService executor;
 
     @EventListener(classes = { ContextRefreshedEvent.class })
@@ -41,12 +43,11 @@ public class SimulationServiceImpl implements SimulationService {
             executor = Executors.newScheduledThreadPool(newDeviceNumber);
         }
         for (int i = 0; i < newDeviceNumber; i++) {
-            final String device = i + "";
-            final JsonObject body = new JsonObject();
-            body.addProperty("A", device);
+            final int deviceNumber = i;
             executor.scheduleAtFixedRate(() -> {
                 try {
-                    var res = iotControllerApi.sendData(device, body).execute();
+                    var res = iotControllerApi
+                            .sendData(deviceNumber, dataBodyGeneratorUtil.generateDataBody(deviceNumber)).execute();
                     System.out.println(res);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
