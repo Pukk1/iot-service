@@ -46,13 +46,12 @@ public class SimulationServiceImpl implements SimulationService {
             body.addProperty("A", device);
             executor.scheduleAtFixedRate(() -> {
                 try {
-                    System.out.println("send message");
                     var res = iotControllerApi.sendData(device, body).execute();
                     System.out.println(res);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }, 0, 1000 / newMessagePerSecond, TimeUnit.MILLISECONDS);
+            }, 3000, 1000 / newMessagePerSecond, TimeUnit.MILLISECONDS);
         }
         return new PatchConfigResult(newDeviceNumber, newMessagePerSecond);
     }
