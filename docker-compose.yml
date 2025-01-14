@@ -19,13 +19,13 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_MONGODB_HOST=mongo
+      - SPRING_MONGODB_HOST=mongo-controller
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
-      - mongo
+      - mongo-controller
       - rabbitmq
 
-  mongo:
+  mongo-controller:
     image: mongo:latest
     ports:
       - "27017:27017"
@@ -33,7 +33,17 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
-      - mongo-data:/data/db
+      - mongo-controller-data:/data/db
+
+  mongo-rule-engine:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongo-rule-engine-data:/data/db
 
   mongo-express:
     image: mongo-express:latest
@@ -43,7 +53,7 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
-      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_SERVER=mongo-controller
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -56,5 +66,7 @@ services:
       RABBITMQ_DEFAULT_PASS: admin
 
 volumes:
-  mongo-data:
+  mongo-controller-data:
+    driver: local
+  mongo-rule-engine-data:
     driver: local

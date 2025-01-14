@@ -12,5 +12,6 @@
     <modules>
         <module>controller</module>
         <module>data-simulator</module>
+        <module>rule-engine</module>
     </modules>
 </project>
