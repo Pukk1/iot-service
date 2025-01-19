@@ -10,9 +10,10 @@ ENV M2_HOME=$HOME/maven3
 
 COPY  . /
 RUN mvn clean formatter:format install
+RUN mv ./target/rule-engine-0.0.1-SNAPSHOT.jar app.jar
 
 # Копируем файл jar из локальной сборки в контейнер
-COPY target/rule-engine-0.0.1-SNAPSHOT.jar app.jar
+#COPY target/controller-0.0.1-SNAPSHOT.jar app.jar
 
 # Указываем команду запуска приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]
