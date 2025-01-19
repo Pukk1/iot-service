@@ -1,5 +1,5 @@
 server:
-  port: ${RULE_ENGINE_SERVICE_PORT:8080}
+  port: ${RULE_ENGINE_SERVICE_PORT:9092}
 
 spring:
   application:

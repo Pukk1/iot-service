@@ -18,3 +18,16 @@ spring:
     username: ${SPRING_RABBITMQ_USERNAME:admin}
     password: ${SPRING_RABBITMQ_PASSWORD:admin}
     queue-name: ${SPRING_RABBITMQ_QUEUE_NAME:devicePackages}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true

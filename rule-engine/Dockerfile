@@ -12,7 +12,7 @@ COPY  . /
 RUN mvn clean formatter:format install
 
 # Копируем файл jar из локальной сборки в контейнер
-COPY target/data-simulator-0.0.1-SNAPSHOT.jar app.jar
+COPY target/rule-engine-0.0.1-SNAPSHOT.jar app.jar
 
 # Указываем команду запуска приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]

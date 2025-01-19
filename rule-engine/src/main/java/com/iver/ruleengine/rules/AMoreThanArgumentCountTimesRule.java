@@ -22,8 +22,7 @@ public class AMoreThanArgumentCountTimesRule extends LastingRule<Integer, Intege
     public AMoreThanArgumentCountTimesRule(
             @Value("${rules.lasting.aMoreThanArgumentCountTimes.argument}") Integer argument,
             @Value("${rules.lasting.aMoreThanArgumentCountTimes.count}") Integer count,
-            RuleChecksRepository ruleChecksRepository
-    ) {
+            RuleChecksRepository ruleChecksRepository) {
         super(argument, count);
         this.argument = argument;
         this.count = count;
@@ -36,10 +35,8 @@ public class AMoreThanArgumentCountTimesRule extends LastingRule<Integer, Intege
             if (data.containsKey(KEY)) {
                 Integer a = data.get(KEY).isJsonPrimitive() ? Integer.parseInt(data.get(KEY).getAsString()) : null;
                 if (a != null && a > argument) {
-                    var lastChecks = ruleChecksRepository.findLastByRuleName(
-                            AMoreThanArgumentRule.class.getSimpleName(),
-                            PageRequest.of(0, count)
-                    );
+                    var lastChecks = ruleChecksRepository
+                            .findLastByRuleName(AMoreThanArgumentRule.class.getSimpleName(), PageRequest.of(0, count));
                     if (lastChecks == null || lastChecks.isEmpty()) {
                         return false;
                     }
@@ -51,7 +48,8 @@ public class AMoreThanArgumentCountTimesRule extends LastingRule<Integer, Intege
                     return true;
                 }
             }
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+        }
 
         return false;
     }

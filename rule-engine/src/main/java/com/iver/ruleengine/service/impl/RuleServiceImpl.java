@@ -20,11 +20,7 @@ public class RuleServiceImpl implements RuleService {
     private final Logger logger;
 
     @Autowired
-    public RuleServiceImpl(
-            RuleChecksRepository ruleChecksRepository,
-            Logger logger,
-            Map<String, Rule> rules
-    ) {
+    public RuleServiceImpl(RuleChecksRepository ruleChecksRepository, Logger logger, Map<String, Rule> rules) {
         this.ruleChecksRepository = ruleChecksRepository;
         this.logger = logger;
         this.rules = rules;
