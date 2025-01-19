@@ -19,7 +19,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_MONGODB_HOST=mongo-rule-engine
+      - SPRING_MONGODB_HOST=mongo-controller
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mongo-controller
@@ -32,7 +32,7 @@ services:
     ports:
       - "9092:9092"
     environment:
-      - SPRING_MONGODB_HOST=mongo-controller
+      - SPRING_MONGODB_HOST=mongo-rule-engine
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_MONGODB_PORT=27017
     depends_on:
