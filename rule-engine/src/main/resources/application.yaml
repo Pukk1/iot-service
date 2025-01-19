@@ -47,5 +47,8 @@ management:
         "[http.server.requests]": true
 
 logging:
+  file:
+    name: application.log
   level:
-    org.springframework.boot.actuate: DEBUG
+    root: info
+    net.logstash: debug

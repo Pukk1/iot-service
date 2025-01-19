@@ -5,13 +5,11 @@ import com.iver.ruleengine.model.DevicePackage;
 import com.iver.ruleengine.model.RuleCheck;
 import com.iver.ruleengine.repository.RuleChecksRepository;
 import com.iver.ruleengine.rules.Rule;
-import com.iver.ruleengine.service.Logger;
 import com.iver.ruleengine.service.RuleService;
-import io.micrometer.common.util.StringUtils;
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -21,15 +19,13 @@ public class RuleServiceImpl implements RuleService {
 
     private final Map<String, Rule> rules;
     private final RuleChecksRepository ruleChecksRepository;
-    private final Logger logger;
     private final MeterRegistry meterRegistry;
+    private static final Logger logger = LoggerFactory.getLogger(RuleServiceImpl.class);
 
     @Autowired
-    public RuleServiceImpl(RuleChecksRepository ruleChecksRepository, Logger logger, Map<String, Rule> rules,
-            MeterRegistry meterRegistry) {
+    public RuleServiceImpl(RuleChecksRepository ruleChecksRepository, Map<String, Rule> rules, MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
         this.ruleChecksRepository = ruleChecksRepository;
-        this.logger = logger;
         this.rules = rules;
     }
 
@@ -42,7 +38,7 @@ public class RuleServiceImpl implements RuleService {
             if (ruleCheck.getResult()) {
                 meterRegistry.counter("trust_result").increment();
             }
-            logger.log(k + " " + result);
+            logger.info("{} result is {}", k, result);
         });
     }
 }
