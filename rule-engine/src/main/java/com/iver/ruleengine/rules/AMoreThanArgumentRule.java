@@ -12,7 +12,6 @@ import java.util.Map;
 @RefreshScope
 public class AMoreThanArgumentRule extends InstantRule<Integer> {
 
-    private final Integer argument;
     private final String KEY = "A";
 
     public AMoreThanArgumentRule(@Value("${rules.instant.aMoreThanArgument}") Integer argument) {

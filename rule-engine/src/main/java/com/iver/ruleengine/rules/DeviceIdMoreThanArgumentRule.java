@@ -12,8 +12,6 @@ import java.util.Map;
 @RefreshScope
 public class DeviceIdMoreThanArgumentRule extends InstantRule<Integer> {
 
-    private final Integer argument;
-
     public DeviceIdMoreThanArgumentRule(@Value("${rules.instant.deviceIdMoreThanArgument}") Integer argument) {
         super(argument);
         this.argument = argument;

@@ -51,4 +51,3 @@ logging:
     name: application.log
   level:
     root: info
-    net.logstash: debug

@@ -14,8 +14,6 @@ import java.util.Map;
 @RefreshScope
 public class AMoreThanArgumentCountTimesRule extends LastingRule<Integer, Integer> {
 
-    private final Integer argument;
-    private final Integer count;
     private final String KEY = "A";
     private final RuleChecksRepository ruleChecksRepository;
 

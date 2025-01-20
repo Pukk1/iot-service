@@ -23,7 +23,8 @@ public class RuleServiceImpl implements RuleService {
     private static final Logger logger = LoggerFactory.getLogger(RuleServiceImpl.class);
 
     @Autowired
-    public RuleServiceImpl(RuleChecksRepository ruleChecksRepository, Map<String, Rule> rules, MeterRegistry meterRegistry) {
+    public RuleServiceImpl(RuleChecksRepository ruleChecksRepository, Map<String, Rule> rules,
+            MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
         this.ruleChecksRepository = ruleChecksRepository;
         this.rules = rules;
